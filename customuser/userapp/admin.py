@@ -16,12 +16,12 @@ class UserAdminConfig(UserAdmin):
         ('Personal', {'fields': ('about',)})
     )
 
-    # Override form field for 'about' field
+    
     formfield_overrides = {
         NewUser.about: {'widget': Textarea(attrs={'rows': 10, 'cols': 40})}
     }
 
-    # Customized add fields for User creation
+    
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -29,6 +29,14 @@ class UserAdminConfig(UserAdmin):
         }),
     )
 
-# Register the NewUser model with the customized UserAdminConfig
 admin.site.register(NewUser, UserAdminConfig)
-admin.site.register(Dealer,UserAdminConfig)
+
+class DealerAdmin(admin.ModelAdmin):
+    
+    model = Dealer
+    search_fields = ('name')
+    list_filter = ('name','location','group')
+    
+    list_display = ('name','location','group')
+
+admin.site.register(Dealer, DealerAdmin)
